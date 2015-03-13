@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Audioweb</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="about">Acerca de</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Login</string>
+    <string name="service_started">inicio el servicio</string>
+    <string name="tile_activity_timetracker">Time Tracker</string>
+    <string name="empty"></string>
+    <string name="title_activity_sip__call_">Sip_Call_Activity</string>
+    <string name="title_activity_audio_conferencia">Audioconferencia</string>
+    <string name="title_activity_live_streaming">LiveStreaming</string>
+    <string name="title_activity_citas">Citas</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_encuesta">Comentarios de salida</string>
+    <string name="licenciamiento">Licenciamiento</string>
+    <string name="servicios_integrales">Servicios Integrales</string>
+    <string name="audio_conferencia">Audioconferencia</string>
+    <string name="title_activity_citas_list">Citas Activas</string>
+    <string name="enviar">Enviar</string>
+    <string name="otros">Otros</string>
+    <string name="message_hint">Introdusca Texto Aqui</string>
+    <string name="send">Send</string>
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
+    <string name="title_activity_notification__list">Notificaciones</string>
+
+</resources>
