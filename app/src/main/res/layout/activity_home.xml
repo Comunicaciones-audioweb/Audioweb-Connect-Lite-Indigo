@@ -176,8 +176,27 @@
                           android:text="TimeTracking"
                           android:id="@+id/mensajes"/>
             </LinearLayout>
-
-
+            <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <ImageButton android:layout_width="100dp"
+                         android:layout_height="100dp"
+                         android:id="@+id/imageButton3"
+                         android:background="@drawable/chat_button"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center"
+                      android:textAppearance="?android:attr/textAppearanceMedium"
+                      android:textSize="14sp"
+                      android:text="Chat"
+                      android:id="@+id/Chat"/>
+        </LinearLayout>
             <Space
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

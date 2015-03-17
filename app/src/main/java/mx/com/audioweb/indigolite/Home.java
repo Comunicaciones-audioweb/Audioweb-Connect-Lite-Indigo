@@ -23,6 +23,7 @@ import mx.com.audioweb.indigolite.Citas.Cita;
 import mx.com.audioweb.indigolite.Citas.Citas_list;
 import mx.com.audioweb.indigolite.LiveStreaming.LiveStreaming;
 import mx.com.audioweb.indigolite.Notifications.Group;
+import mx.com.audioweb.indigolite.Notifications.Notification_List;
 import mx.com.audioweb.indigolite.Notifications.PusherService;
 import mx.com.audioweb.indigolite.TimeTracker.activity.TimeTracking_Activity;
 import org.json.JSONException;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 
 public class Home extends Activity implements View.OnClickListener {
 
-    public ImageButton TT, LS, C, AC,NOT;
+    public ImageButton TT, LS, C, AC,NOT,CT;
     public AlertDialog.Builder alertDialogBuilder;
     public AlertDialog alertDialog;
     SharedPreferences myPrefs;
@@ -72,12 +73,14 @@ public class Home extends Activity implements View.OnClickListener {
         LS = (ImageButton) findViewById(R.id.imageButton4);
         C = (ImageButton) findViewById(R.id.imageButton5);
         NOT = (ImageButton) findViewById(R.id.imageButton6);
+        CT =(ImageButton) findViewById(R.id.imageButton3);
 
         AC.setOnClickListener(this);
         TT.setOnClickListener(this);
         LS.setOnClickListener(this);
         C.setOnClickListener(this);
         NOT.setOnClickListener(this);
+        CT.setOnClickListener(this);
 
     }
 
@@ -153,7 +156,10 @@ public class Home extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.imageButton6:
-                startActivity(new Intent(this, ChatActivity.class));
+                startActivity(new Intent(this, Notification_List.class));
+                break;
+            case R.id.imageButton3:
+                startActivity(new Intent(this,ChatActivity.class));
                 break;
         }
     }
