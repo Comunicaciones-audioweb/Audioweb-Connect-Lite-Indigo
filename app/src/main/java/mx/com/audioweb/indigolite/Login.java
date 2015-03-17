@@ -25,6 +25,7 @@ public class Login extends Activity {
     EditText User, Pass;
     JSONObject jData,json;
     Button LogIn;
+    public static String UserName;
     String userName, password, webURL, getUserName, android_id;
     private Bundle id;
     SharedPreferences preferences;
@@ -93,6 +94,7 @@ public class Login extends Activity {
 
                     webURL = CONFIG.SERVER_URL + "salesmen/login";
                     try {
+                        UserName = userName;
                         json.put("username", userName);
                         json.put("password", password);
                         json.put("device_id", "0");

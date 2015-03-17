@@ -71,7 +71,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         if (isMe) {
             profileView.setImageDrawable(drawable);
             holder.body.setText(message.getBody());
-            holder.body.setBackgroundResource(R.drawable.chat_2);
+            holder.body.setBackgroundResource(R.drawable.ic_chat_2);
             holder.body.setTextColor(Color.WHITE);
             holder.body.setGravity(Gravity.RIGHT);
         }
@@ -79,7 +79,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             profileView.setImageDrawable(drawable);
             holder.body.setText(message.getBody());
             holder.body.setTextColor(Color.WHITE);
-            holder.body.setBackgroundResource(R.drawable.chat_1);
+            holder.body.setBackgroundResource(R.drawable.ic_chat_1);
             holder.body.setGravity(Gravity.LEFT);
 
         }

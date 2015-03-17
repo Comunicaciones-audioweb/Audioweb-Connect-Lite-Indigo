@@ -1,7 +1,9 @@
 package mx.com.audioweb.indigolite.Chat;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -87,6 +89,12 @@ public class ChatActivity extends ActionBarActivity {
         lvChat = (ListView) findViewById(R.id.lvChat);
         mMessages = new ArrayList<Message>();
         mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
+
+        SharedPreferences preferences;
+        preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String UsName = preferences.getString("User Name", null);
+        Log.e("VALORR--------->",UsName);
+        final String uname = (String) UsName.subSequence(0,2);
         lvChat.setAdapter(mAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
 
@@ -96,7 +104,7 @@ public class ChatActivity extends ActionBarActivity {
                 // Use Message model to create new messages now
                 Message message = new Message();
                 message.setUserId(sUserId);
-                message.setInitial("JA");
+                message.setInitial(uname.toUpperCase());
                 message.setBody(body);
                 message.saveInBackground(new SaveCallback() {
                     @Override
