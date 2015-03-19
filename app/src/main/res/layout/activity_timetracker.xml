@@ -12,7 +12,7 @@
             android:gravity="center"
             android:layout_marginTop="20dp"
             android:textSize="25dp"
-            android:text="Por favor valide su ubicación"
+            android:text="@string/get_location"
             android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
 
     <ImageView android:layout_width="150dp"
@@ -24,7 +24,7 @@
     <Button
             android:layout_width="155dp"
             android:layout_height="wrap_content"
-            android:text="Validar"
+            android:text="@string/validate"
             android:textAlignment="center"
             android:id="@+id/auth_button"
             android:onClick="startAuthenticateClick"
@@ -36,7 +36,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notificaciones Activas"
+            android:text="@string/active_notification"
             android:onClick="onCheckboxClicked"
             android:id="@+id/checknotification"
             android:layout_below="@+id/auth_button"

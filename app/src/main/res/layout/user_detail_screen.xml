@@ -8,7 +8,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Ver Mapa"
+            android:text="@string/view_map"
             android:textColor="@android:color/white"
             android:background="@drawable/custom_button"
             android:layout_alignLeft="@+id/txtemail" android:layout_alignStart="@+id/txtemail"
@@ -23,7 +23,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="30dp"
-            android:text="Validación"
+            android:text="@string/validation"
             android:textColor="@android:color/white"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
@@ -37,7 +37,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:text="Id Usuario"
+            android:text="@string/user_id"
             android:textColor="@android:color/holo_red_dark" />
 
     <TextView
@@ -68,7 +68,7 @@
             android:layout_below="@id/userView"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:text="Nombre"
+            android:text="@string/name"
             android:textColor="@android:color/holo_red_dark" />
 
     <TextView
@@ -80,7 +80,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/txtname"
             android:padding="5dp"
-            android:text=""
+            android:text="@string/empty"
             android:textColor="#000000" />
 
     <View
@@ -99,7 +99,7 @@
             android:layout_below="@id/nameView"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:text="Hora"
+            android:text="@string/hour"
             android:textColor="@android:color/holo_red_dark" />
 
     <TextView
@@ -111,7 +111,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/txttime"
             android:padding="5dp"
-            android:text=""
+            android:text="@string/empty"
             android:textColor="#000" />
 
     <View
@@ -131,7 +131,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:text="Ubicación"
+            android:text="@string/location"
             android:textColor="@android:color/holo_red_dark" />
 
     <TextView
@@ -144,7 +144,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/txtloc"
             android:padding="5dp"
-            android:text=""
+            android:text="@string/empty"
             android:textColor="#000" />
 
     <View
@@ -163,7 +163,7 @@
             android:layout_below="@id/locView"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:text="Teléfono"
+            android:text="@string/phone_number"
             android:textColor="@android:color/holo_red_dark" />
 
     <TextView
@@ -175,7 +175,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/txtphone"
             android:padding="5dp"
-            android:text=""
+            android:text="@string/empty"
             android:textColor="#000" />
 
     <View
@@ -194,7 +194,7 @@
             android:layout_below="@id/phoneView"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:text="Correo"
+            android:text="@string/mail"
             android:textColor="@android:color/holo_red_dark" />
 
     <TextView
@@ -206,7 +206,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/txtemail"
             android:padding="5dp"
-            android:text=""
+            android:text="@string/empty"
             android:textColor="#000" />
 
     <View
