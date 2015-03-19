@@ -9,7 +9,7 @@
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enviar"
+            android:text="@string/send_poll"
             android:textColor="@android:color/white"
             android:background="@drawable/custom_button"
             android:id="@+id/buttonEnviar" android:layout_gravity="center_horizontal|bottom"
@@ -78,7 +78,7 @@
 
             <EditText
                     android:gravity="center"
-                    android:hint="Escribe tu comentario"
+                    android:hint="@string/write_comment"
                     android:shadowColor="@android:color/holo_red_dark"
                     android:id="@+id/descripcion_text"
                     android:layout_width="fill_parent"
