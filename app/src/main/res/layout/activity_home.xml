@@ -64,7 +64,7 @@
                           android:textAppearance="?android:attr/textAppearanceMedium"
                           android:textSize="14sp"
                           android:layout_gravity="center"
-                          android:text="Citas"
+                          android:text="@string/appointments"
                           android:id="@+id/timeTracking"
                         />
 
@@ -103,7 +103,7 @@
                           android:layout_gravity="center"
                           android:textAppearance="?android:attr/textAppearanceMedium"
                           android:textSize="14sp"
-                          android:text="Transmisión"
+                          android:text="@string/streaming"
                           android:id="@+id/ventas"
                         />
                 <TextView android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                           android:gravity="center"
                           android:textAppearance="?android:attr/textAppearanceMedium"
                           android:textSize="14sp"
-                          android:text="en vivo"
+                          android:text="@string/live"
                           android:textAlignment="center"
                           android:layout_gravity="center_horizontal"/>
 
@@ -136,7 +136,7 @@
                           android:layout_gravity="center"
                           android:textAppearance="?android:attr/textAppearanceMedium"
                           android:textSize="14sp"
-                          android:text="Notificaciones"
+                          android:text="@string/notifications"
                           android:id="@+id/notificationl"/>
             </LinearLayout>
 

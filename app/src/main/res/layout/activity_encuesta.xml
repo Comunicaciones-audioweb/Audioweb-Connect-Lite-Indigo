@@ -44,7 +44,7 @@
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/licenciamiento"
+            android:text="@string/licensing"
             android:onClick="onCheckboxClicked"
             android:id="@+id/checkBox3"
             android:layout_toStartOf="@+id/textView2"

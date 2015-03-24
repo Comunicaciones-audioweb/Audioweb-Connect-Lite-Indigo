@@ -1,6 +1,8 @@
 package mx.com.audioweb.indigolite.Chat;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -94,7 +96,20 @@ public class ChatActivity extends ActionBarActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String UsName = preferences.getString("User Name", null);
         Log.e("VALORR--------->",UsName);
-        final String uname = (String) UsName.subSequence(0,2);
+        final String uname;
+        if(UsName.contains("."))
+        {
+            String parts[] = UsName.split("\\.");
+            System.out.print(parts[0]);
+            String u = parts[0];
+            String n = parts[1];
+            String user = (String) u.subSequence(0,1);
+            String name = (String) n.subSequence(0,1);
+            uname = user+name;
+        }
+        else {
+            uname = (String) UsName.subSequence(0,2);
+        }
         lvChat.setAdapter(mAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
 
@@ -125,6 +140,7 @@ public class ChatActivity extends ActionBarActivity {
         query.orderByAscending("createdAt");
         // Execute query for messages asynchronously
         query.findInBackground(new FindCallback<Message>() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             public void done(List<Message> messages, ParseException e) { // returns list of messages
                 if (e == null) {
                     if (messages.size() != Size){

@@ -20,18 +20,5 @@ public class ChatApplication extends Application {
 
         // Add your initialization code here
         Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
-
-        // Test creation of object
-        //ParseObject testObject = new ParseObject("TestObject");
-        //testObject.put("foo", "bar");
-        /*ParseObject myObject = new ParseObject("Messages");
-        myObject.deleteInBackground();
-        myObject.saveInBackground();
-        myObject = new ParseObject("Chat");
-        myObject.deleteInBackground();
-        myObject.saveInBackground();
-        myObject = new ParseObject("Message");
-        myObject.deleteInBackground();
-        myObject.saveInBackground();*/
     }
 }

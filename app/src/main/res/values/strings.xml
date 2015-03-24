@@ -11,7 +11,7 @@
     <string name="start_appointment">Iniciar Cita</string>
     <string name="enterprise">Empresa</string>
     <string name="contact">Contacto</string>
-    <string name="presencial">Presencial</string>
+    <string name="presential">Presencial</string>
     <string name="remote">Remota</string>
     <string name="active_appointments">Citas Activas</string>
     <string name="appointment_list">Lista de Citas</string>
@@ -32,24 +32,27 @@
     <string name="location">Ubicación</string>
     <string name="phone_number">Teléfono</string>
     <string name="mail">Correo</string>
-    
+    <string name="appointments">Citas</string>
+    <string name="live">en vivo</string>
+    <string name="streaming">Transmisión</string>
+    <string name="notifications">Notificaciones</string>
+
     <string name="action_settings">Ajustes</string>
     <string name="title_activity_login">Login</string>
     <string name="service_started">inicio el servicio</string>
     <string name="tile_activity_timetracker">Time Tracker</string>
-    <string name="empty"> </string>
-    <string name="title_activity_sip__call_">Sip_Call_Activity</string>
+    <string name="empty">asd</string>
+    <string name="title_activity_sip__call_">Llamadas Sip</string>
     <string name="title_activity_audio_conferencia">Audioconferencia</string>
     <string name="title_activity_live_streaming">LiveStreaming</string>
     <string name="title_activity_citas">Citas</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_encuesta">Comentarios de salida</string>
-    <string name="licenciamiento">Licenciamiento</string>
+    <string name="licensing">Licenciamiento</string>
     <string name="servicios_integrales">Servicios Integrales</string>
     <string name="audio_conferencia">Audioconferencia</string>
     <string name="title_activity_citas_list">Citas Activas</string>
     <string name="otros">Otros</string>
-
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
     <string name="title_activity_notification__list">Notificaciones</string>

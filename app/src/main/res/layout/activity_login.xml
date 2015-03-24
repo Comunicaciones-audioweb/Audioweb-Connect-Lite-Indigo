@@ -37,7 +37,7 @@
     <Button
             android:layout_width="155dp"
             android:layout_height="wrap_content"
-            android:text="Inicio de Sesion"
+            android:text="@string/title_activity_login"
             android:textAlignment="center"
             android:id="@+id/loginButton"
             android:textColor="@android:color/white"
