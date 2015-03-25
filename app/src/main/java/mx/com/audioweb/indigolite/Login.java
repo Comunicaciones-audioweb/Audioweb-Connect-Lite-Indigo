@@ -1,6 +1,7 @@
 package mx.com.audioweb.indigolite;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
+import mx.com.audioweb.indigolite.Chat.Chat.UserList;
+import mx.com.audioweb.indigolite.Chat.Chat.Utils;
 import mx.com.audioweb.indigolite.TimeTracker.Shared_notifications;
 import mx.com.audioweb.indigolite.TimeTracker.api.CONFIG;
 import mx.com.audioweb.indigolite.TimeTracker.task.UserLoginTask;
@@ -87,9 +96,13 @@ public class Login extends Activity {
                 if (!CONFIG.isNetworkAvailable(mContext)) {
                     Toast.makeText(mContext, "Check your internet connection", Toast.LENGTH_LONG).show();
                 } else {
+                    //final ProgressDialog dialog = ProgressDialog.show(getApplicationContext(),null,getString(R.string.alert_wait));
+                    final ParseUser parseUser = new ParseUser();
                     userName = User.getText().toString();
                     password = Pass.getText().toString();
                     preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                    edit.putString("userName",userName);
+                    edit.putString("passWord",password);
                     edit.commit();
 
                     webURL = CONFIG.SERVER_URL + "salesmen/login";
@@ -128,8 +141,48 @@ public class Login extends Activity {
                             edit.putBoolean("Call_Service", callService);
                             edit.commit();
                             authVoiceID = jData.getString("smen_auth_voice_id").matches("0");
-                            startActivity(new Intent(mContext, Home.class).putExtras(id));
-                            finish();
+
+                            parseUser.setEmail(userName+"@audioweb.com.mx");
+                            parseUser.setPassword(password);
+                            parseUser.setUsername(userName);
+                            parseUser.signUpInBackground(new SignUpCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    //dialog.dismiss();
+                                    if(e == null){
+                                        UserList.user = parseUser;
+                                        //startActivity(new Intent(Register.this,UserList.class));
+                                        startActivity(new Intent(mContext, Home.class).putExtras(id));
+                                        setResult(RESULT_OK);
+                                        finish();
+                                    }
+                                    else{
+                                        //Utils.showDialog(Register.this, getString(R.string.err_singup) + " " + e.getMessage());
+                                        Log.e("ERROR REGISTRO-->",getString(R.string.err_singup) + " " + e.getMessage());
+                                        e.printStackTrace();
+                                        ParseUser.logInInBackground(userName, password, new LogInCallback() {
+
+                                            @Override
+                                            public void done(ParseUser parseUser, ParseException e) {
+                                                //dialog.dismiss();
+                                                if (parseUser != null) {
+                                                    Log.e("ERROR REGISTRO-->",getString(R.string.title_activity_login) + " " + userName);
+                                                    UserList.user = parseUser;
+                                                    startActivity(new Intent(mContext, Home.class).putExtras(id));
+                                                    finish();
+                                                } else {
+                                                    Log.e("ERROR REGISTRO-->",getString(R.string.err_login) + " " + e.getMessage());
+                                                    //Utils.showDialog(Login.this, getString(R.string.err_login) + " " + e.getMessage());
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+                            /*startActivity(new Intent(mContext, Home.class).putExtras(id));
+                            finish();*/
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -137,9 +190,7 @@ public class Login extends Activity {
                 }
             }
         });
-
     }
-
 }
 
 

@@ -33,7 +33,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).
-                    inflate(R.layout.chat_item, parent, false);
+                    inflate(R.layout.item_chat, parent, false);
             final ViewHolder holder = new ViewHolder();
             holder.imageLeft = (ImageView)convertView.findViewById(R.id.ivProfileLeft);
             holder.imageRight = (ImageView)convertView.findViewById(R.id.ivProfileRight);

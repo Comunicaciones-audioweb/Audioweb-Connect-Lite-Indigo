@@ -57,4 +57,24 @@
     <string name="profile_other">Other profile pic</string>
     <string name="title_activity_notification__list">Notificaciones</string>
 
+
+    <string name="TextView">TextView</string>
+    <string name="text">text</string>
+    <string name="err_fields_empty">Favor de LLenar los campos</string>
+    <string name="alert_wait">Please Wait ...</string>
+    <string name="err_login">Error Login</string>
+    <string name="err_singup">Error Registro</string>
+    <string name="type_msg">Escribe tu mensaje</string>
+    <string name="forgot_my_pwd">Olvide mi password</string>
+    <string name="my_chats">My Chats</string>
+    <string name="all_chats">All Chats</string>
+    <string name="search">Search</string>
+    <string name="to">To:</string>
+    <string name="edit">Edit</string>
+    <string name="new_chat">New Chat</string>
+    <string name="err_users">Error loading users</string>
+    <string name="alert_loading">Loading...</string>
+    <string name="msg_no_user_found">No users found for chat!</string>
+    <string name="intent_data">intent_data</string>
+
 </resources>

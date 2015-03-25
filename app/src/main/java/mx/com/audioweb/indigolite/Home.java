@@ -17,7 +17,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+
 import mx.com.audioweb.indigolite.AudioConference.AudioConferencia;
+import mx.com.audioweb.indigolite.Chat.Chat.UserList;
 import mx.com.audioweb.indigolite.Chat.ChatActivity;
 import mx.com.audioweb.indigolite.Citas.Cita;
 import mx.com.audioweb.indigolite.Citas.Citas_list;
@@ -48,6 +54,30 @@ public class Home extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String user=(mSharedPreference.getString("userName", "Default_Value"));
+        String pass=(mSharedPreference.getString("passWord", "Default_Value"));
+
+        Log.e("DATOS-->",user+" -> "+pass);
+        Log.e("USERLIST",String.valueOf(UserList.user));
+        if(UserList.user == null) {
+            ParseUser.logInInBackground(user, pass, new LogInCallback() {
+
+                @Override
+                public void done(ParseUser parseUser, ParseException e) {
+                    //dialog.dismiss();
+                    if (parseUser != null) {
+                        Log.e("ERROR REGISTRO-->", getString(R.string.title_activity_login) + " ");
+                        UserList.user = parseUser;
+                    } else {
+                        Log.e("ERROR REGISTRO-->", getString(R.string.err_login) + " " + e.getMessage());
+                        //Utils.showDialog(Login.this, getString(R.string.err_login) + " " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
 
         PusherService.numMessages = 0;
         PusherService.events = new String[101];
@@ -159,7 +189,7 @@ public class Home extends Activity implements View.OnClickListener {
                 startActivity(new Intent(this, Notification_List.class));
                 break;
             case R.id.imageButton3:
-                startActivity(new Intent(this,ChatActivity.class));
+                startActivity(new Intent(Home.this,UserList.class));
                 break;
         }
     }
@@ -398,6 +428,11 @@ public class Home extends Activity implements View.OnClickListener {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(key, value);
         editor.commit();
+    }
+
+    public static String getDefaults(String key, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, null);
     }
 }
 

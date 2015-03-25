@@ -48,7 +48,21 @@
         </service>
 
         <activity
+            android:name=".Chat.Chat.UserList"
+            android:label="@string/app_name"
+            android:theme="@style/CustomActionBarTheme"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Chat.Chat.Chat"
+            android:theme="@style/CustomActionBarTheme"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name=".Home"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/app_name"
 
             android:theme="@style/CustomActionBarTheme" >
