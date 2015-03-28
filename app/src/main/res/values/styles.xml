@@ -17,7 +17,7 @@
     </style>
 
     <style name="edittext_msj" parent="android:Widget.Holo.Light.EditText">
-        <item name="android:background">@android:drawable/editbox_background</item>
+        <item name="android:background">@android:drawable/editbox_dropdown_light_frame</item>
         <item name="android:ems">10</item>
         <item name="android:imeActionId">200</item>
         <item name="android:imeOptions">actionSend</item>

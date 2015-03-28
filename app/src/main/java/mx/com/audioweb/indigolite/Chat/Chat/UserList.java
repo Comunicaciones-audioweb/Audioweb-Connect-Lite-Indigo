@@ -33,7 +33,8 @@ public class UserList extends CustomActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
+        getActionBar().setHomeButtonEnabled(false);
         updateUserStatus(true);
     }
 
@@ -107,7 +108,7 @@ public class UserList extends CustomActivity {
             }
             ParseUser c =getItem(position);
             TextView lbl = (TextView) convertView.findViewById(R.id.chat_item);
-            lbl.setText(c.getUsername());
+            lbl.setText(c.getString("Name"));
             lbl.setCompoundDrawablesRelativeWithIntrinsicBounds(c.getBoolean("online") ? R.drawable.ic_online:R.drawable.ic_offline,0,R.drawable.arrow,0);
             return convertView;
         }

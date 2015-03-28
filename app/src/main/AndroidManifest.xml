@@ -33,8 +33,7 @@
         android:theme="@style/CustomActionBarTheme">
 
         <!-- Start the Service if applicable on boot -->
-        <receiver android:name=".TimeTracker.api.ServiceStarter" >
-
+        <receiver android:name=".TimeTracker$api.ServiceStarter" >
             <!--
             <intent-filter android:priority="100" >
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

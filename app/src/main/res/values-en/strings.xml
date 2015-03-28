@@ -55,4 +55,22 @@
     <string name="live">Streaming</string>
     <string name="appointments">Appointments</string>
     <string name="empty">asd</string>
+    <string name="alert_loading">Loading ...</string>
+    <string name="alert_wait">Please Wait ...</string>
+    <string name="all_chats">All Chats</string>
+    <string name="TextView">TextView</string>
+    <string name="err_fields_empty">Fill All The Fields</string>
+    <string name="err_login">Error Login</string>
+    <string name="err_singup">Error Registro</string>
+    <string name="err_users">Error Loading Users</string>
+    <string name="forgot_my_pwd">Forgot My Password</string>
+    <string name="intent_data">intent_data</string>
+    <string name="msg_no_user_found">Cant Find Users</string>
+    <string name="my_chats">My Chats</string>
+    <string name="new_chat">New Chat</string>
+    <string name="search">Search</string>
+    <string name="text">text</string>
+    <string name="to">To:</string>
+    <string name="type_msg">Type your message</string>
+    <string name="edit">Edit</string>
 </resources>

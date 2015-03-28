@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -43,6 +45,13 @@ public class Chat extends CustomActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
+        buddy = getIntent().getStringExtra(getResources().getString(R.string.intent_data));
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        int color2 = generator.getColor(buddy);
+        TextDrawable initial = TextDrawable.builder().buildRound("IN",color2);
+        //getActionBar().setLogo(initial);
+
+
 
         convList = new ArrayList<Conversation>();
         ListView list = (ListView) findViewById(R.id.list);
@@ -54,8 +63,8 @@ public class Chat extends CustomActivity {
         txt = (EditText) findViewById(R.id.txt);
         txt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         setTouchNClick(R.id.btnSend);
-        buddy = getIntent().getStringExtra(getResources().getString(R.string.intent_data));
-        //getActionBar().setTitle(buddy);
+
+        getActionBar().setTitle(buddy);
 
         handler = new Handler();
     }
@@ -192,7 +201,7 @@ public class Chat extends CustomActivity {
             lbl = (TextView) convertView.findViewById(R.id.lbl3);
             if(c.isSent()){
                 if(c.getStatus()== Conversation.STATUS_SENT){
-                    lbl.setText(":)");
+                    lbl.setText("✓✓");
                 }
                 else if(c.getStatus() == Conversation.STATUS_SENDING){
                     lbl.setText("--");

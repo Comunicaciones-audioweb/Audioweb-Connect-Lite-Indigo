@@ -11,7 +11,7 @@ import mx.com.audioweb.indigolite.R;
  */
 public class CustomActivity extends FragmentActivity implements View.OnClickListener {
 
-    public static final TouchEffect TOUCH =new TouchEffect();
+    public static final TouchEffect TOUCH = new TouchEffect();
 
     @Override
     public void setContentView(int layoutResID) {
@@ -19,31 +19,31 @@ public class CustomActivity extends FragmentActivity implements View.OnClickList
         setupActionBar();
     }
 
-    protected void setupActionBar(){
+    protected void setupActionBar() {
 
         final ActionBar actionBar = getActionBar();
-        if(actionBar == null)
+        if (actionBar == null)
             return;
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setLogo(R.drawable.ic_launcher);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.abc_ratingbar_full_material));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.list_background_pressed));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
     }
 
-    public View setTouchNClick(int id){
+    public View setTouchNClick(int id) {
         View v = setClick(id);
-        if(v != null)
+        if (v != null)
             v.setOnTouchListener(TOUCH);
         return v;
     }
 
-    public View setClick(int id){
+    public View setClick(int id) {
         View v = findViewById(id);
-        if(v != null)
+        if (v != null)
             v.setOnClickListener(this);
         return v;
     }
