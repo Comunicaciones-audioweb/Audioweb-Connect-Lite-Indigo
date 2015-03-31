@@ -72,7 +72,7 @@ public class UserList extends CustomActivity {
                     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            startActivity(new Intent(UserList.this,Chat.class).putExtra(getResources().getString(R.string.intent_data),uList.get(position).getUsername()));
+                            startActivity(new Intent(UserList.this,Chat.class).putExtra(getResources().getString(R.string.intent_data),uList.get(position).getUsername()).putExtra(getResources().getString(R.string.parse_name_user),uList.get(position).get("Name").toString()));
                         }
                     });
                 }

@@ -3,6 +3,7 @@ package mx.com.audioweb.indigolite;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,10 +13,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.parse.LogInCallback;
@@ -39,10 +42,12 @@ import java.util.ArrayList;
 
 public class Home extends Activity implements View.OnClickListener {
 
+    private static final String TAG = "TAG" ;
     public ImageButton TT, LS, C, AC,NOT,CT;
     public AlertDialog.Builder alertDialogBuilder;
     public AlertDialog alertDialog;
     SharedPreferences myPrefs;
+    public String userName;
     SharedPreferences.Editor edit;
     public static Context mContext;
     private ArrayList<User_info> userinfos;
@@ -56,9 +61,8 @@ public class Home extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
 
         final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String user=(mSharedPreference.getString("userName", "Default_Value"));
+        final String user=(mSharedPreference.getString("userName", "Default_Value"));
         String pass=(mSharedPreference.getString("passWord", "Default_Value"));
-
         Log.e("DATOS-->",user+" -> "+pass);
         Log.e("USERLIST",String.valueOf(UserList.user));
         if(UserList.user == null) {
@@ -68,8 +72,16 @@ public class Home extends Activity implements View.OnClickListener {
                 public void done(ParseUser parseUser, ParseException e) {
                     //dialog.dismiss();
                     if (parseUser != null) {
-                        Log.e("ERROR REGISTRO-->", getString(R.string.title_activity_login) + " ");
+                        Log.e("Ya se Registro-->", getString(R.string.title_activity_login) + " ");
                         UserList.user = parseUser;
+                        userName = UserList.user.getString("Name");
+                        Log.e("USER", UserList.user.getUsername());
+                        Log.e("USERNAME-->",UserList.user.getString("Name"));
+                        if(userName.equals("0")) {
+                            showDialog(0);
+                        }
+
+
                     } else {
                         Log.e("ERROR REGISTRO-->", getString(R.string.err_login) + " " + e.getMessage());
                         //Utils.showDialog(Login.this, getString(R.string.err_login) + " " + e.getMessage());
@@ -77,6 +89,12 @@ public class Home extends Activity implements View.OnClickListener {
                     }
                 }
             });
+        }
+        else{
+            userName = UserList.user.getString("Name");
+            if(userName.equals("0")) {
+                showDialog(0);
+            }
         }
 
         PusherService.numMessages = 0;
@@ -96,7 +114,8 @@ public class Home extends Activity implements View.OnClickListener {
             edit.commit();
             // and get whatever type user account id is
         }
-        new GroupAcTask(getApplicationContext(), groups).execute(myPrefs.getString("User Id", ""));
+        //new GroupAcTask(getApplicationContext(), groups).execute(myPrefs.getString("User Id", ""));
+
 
         AC = (ImageButton) findViewById(R.id.imageButton);
         TT = (ImageButton) findViewById(R.id.imageButton2);
@@ -112,6 +131,71 @@ public class Home extends Activity implements View.OnClickListener {
         NOT.setOnClickListener(this);
         CT.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+
+        switch (id) {
+            case 0:
+                return createExampleDialog();
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * If a dialog has already been created,
+     * this is called to reset the dialog
+     * before showing it a 2nd time. Optional.
+     */
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+
+        switch (id) {
+            case 0:
+                // Clear the input box.
+                EditText text = (EditText) dialog.findViewById(0);
+                text.setText("");
+                break;
+        }
+    }
+
+    /**
+     * Create and return an example alert dialog with an edit text box.
+     */
+    private Dialog createExampleDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("HOLA !!");
+        builder.setMessage("Cual es tu Nombre:");
+
+        // Use an EditText view to get user input.
+        final EditText input = new EditText(this);
+        input.setId(0);
+        builder.setView(input);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                Log.d(TAG, "User name: " + value);
+                UserList.user.put("Name",value);
+                UserList.user.saveInBackground();
+                return;
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+
+        return builder.create();
     }
 
     @Override

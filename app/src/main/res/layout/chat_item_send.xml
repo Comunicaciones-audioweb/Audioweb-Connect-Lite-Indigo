@@ -10,17 +10,18 @@
 
     <LinearLayout
         android:id="@+id/v1"
+        android:layout_marginTop="@dimen/pad_10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/pad_10dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:background="@color/main_color_green"
-        android:paddingBottom="@dimen/pad_5dp"
+        android:background="@drawable/ic_chatbubble_me"
+        android:paddingBottom="@dimen/pad_10dp"
         android:paddingLeft="@dimen/pad_15dp"
         android:paddingRight="@dimen/pad_chat_item"
-        android:paddingTop="@dimen/pad_5dp"
+        android:paddingTop="@dimen/pad_10dp"
         >
 
         <TextView
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/lbl1"
             android:text="@string/TextView"
-            android:textColor="@color/white"
+            android:textColor="@color/main_color_gray_lt"
             android:textSize="@dimen/txt_13sp"
             />
 
@@ -37,9 +38,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/lbl2"
             android:text="@string/text"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_text"
             android:textSize="@dimen/txt_14sp"
-            android:maxLines="6"
+            android:maxLines="50"
             />
 
         </LinearLayout>
@@ -49,10 +50,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/TextView"
-        android:textColor="@color/main_color_gray"
-        android:textSize="@dimen/txt_14sp"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/txt_7sp"
         android:layout_alignRight="@+id/v1"
-        android:layout_marginTop="@dimen/pad_5dp"
         />
 
 

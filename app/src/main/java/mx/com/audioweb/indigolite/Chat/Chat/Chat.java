@@ -36,7 +36,7 @@ public class Chat extends CustomActivity {
     private ArrayList<Conversation> convList;
     private ChatAdapter adp;
     private EditText txt;
-    private String buddy;
+    private String buddy,buddyName;
     private Date lastMsgDate;
     private boolean isRunning;
     public static Handler handler;
@@ -46,6 +46,7 @@ public class Chat extends CustomActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
         buddy = getIntent().getStringExtra(getResources().getString(R.string.intent_data));
+        buddyName = getIntent().getStringExtra(getResources().getString(R.string.parse_name_user));
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         int color2 = generator.getColor(buddy);
         TextDrawable initial = TextDrawable.builder().buildRound("IN",color2);
@@ -64,7 +65,7 @@ public class Chat extends CustomActivity {
         txt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         setTouchNClick(R.id.btnSend);
 
-        getActionBar().setTitle(buddy);
+        getActionBar().setTitle(buddyName);
 
         handler = new Handler();
     }

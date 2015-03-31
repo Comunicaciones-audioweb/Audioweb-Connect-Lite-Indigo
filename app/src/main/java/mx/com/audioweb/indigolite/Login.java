@@ -145,6 +145,7 @@ public class Login extends Activity {
                             parseUser.setEmail(userName+"@audioweb.com.mx");
                             parseUser.setPassword(password);
                             parseUser.setUsername(userName);
+                            parseUser.put("Name","0");
 
                             parseUser.signUpInBackground(new SignUpCallback() {
                                 @Override

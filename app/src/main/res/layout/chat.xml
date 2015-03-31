@@ -19,6 +19,7 @@
         tools:listitem = "@layout/chat_item_rcv"
         >
         </ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
