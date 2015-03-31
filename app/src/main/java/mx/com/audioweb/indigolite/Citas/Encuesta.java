@@ -9,31 +9,28 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
-import mx.com.audioweb.indigolite.ClienteHttp;
-import mx.com.audioweb.indigolite.R;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RatingBar;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
-import com.nispok.snackbar.enums.SnackbarType;
-import com.nispok.snackbar.listeners.ActionClickListener;
-import com.nispok.snackbar.listeners.ActionSwipeListener;
-import com.nispok.snackbar.listeners.EventListener;
-
 import java.util.ArrayList;
+
+import mx.com.audioweb.indigolite.ClienteHttp;
+import mx.com.audioweb.indigolite.R;
 
 public class Encuesta extends Activity {
 
+    public static String Value = "hola";
     CheckBox s1, s2, s3, s4;
     RatingBar rating;
     SharedPreferences myPrefs;
     Context mContext;
     SharedPreferences.Editor edit;
-    public static String Value = "hola";
-
     String ser1 = "0", ser2 = "0", ser3 = "0", ser4 = "0", cita_id, calif, des;
     EditText descripcion;
     double latitude, longitude;
@@ -208,7 +205,7 @@ public class Encuesta extends Activity {
             String id = myPrefs.getString("User Id", "");
             Bundle uid = new Bundle();
             uid.putSerializable("uid", id);
-            new CitasTask(this.context,id).execute();
+            new CitasTask(this.context, id).execute();
             //Citas.ccita.finish();
             //finish();
 
@@ -218,12 +215,12 @@ public class Encuesta extends Activity {
     }
 
     public class CitasTask extends AsyncTask<String, Void, Boolean> {
-        private Context context;
         ArrayList<Cita> citas_list;
+        private Context context;
         private Bundle informacion;
         private String id;
 
-        public CitasTask(Context context,  String id) {
+        public CitasTask(Context context, String id) {
             this.context = context;
             this.id = id;
         }
@@ -235,12 +232,12 @@ public class Encuesta extends Activity {
 
                 Log.i("ID->>", this.id);
                 citas_list = clienteHttp.GetCitas(this.id);
-                Log.i("CITA_LIST--??",String.valueOf(citas_list));
+                Log.i("CITA_LIST--??", String.valueOf(citas_list));
                 if (citas_list == null) {
                     Log.d("Message", "No existen citas");
                 } else {
 
-                    Log.e("CITAS",String.valueOf(citas_list));
+                    Log.e("CITAS", String.valueOf(citas_list));
 
 
                 }

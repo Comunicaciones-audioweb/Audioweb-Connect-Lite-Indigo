@@ -17,6 +17,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.pusher.client.Pusher;
 import com.pusher.client.PusherOptions;
 import com.pusher.client.channel.Channel;
@@ -24,10 +25,7 @@ import com.pusher.client.channel.ChannelEventListener;
 import com.pusher.client.connection.ConnectionEventListener;
 import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
-import mx.com.audioweb.indigolite.Home;
-import mx.com.audioweb.indigolite.R;
-import mx.com.audioweb.indigolite.SharedPreferencesExecutor;
-import mx.com.audioweb.indigolite.User_info;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -48,6 +46,10 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import mx.com.audioweb.indigolite.Home;
+import mx.com.audioweb.indigolite.R;
+import mx.com.audioweb.indigolite.SharedPreferencesExecutor;
 
 /**
  * Created by Juan Acosta on 12/10/2014.
@@ -311,20 +313,19 @@ public class PusherService extends Service implements ConnectionEventListener, C
         if (jsonObject != null) {
             if (jsonObject.has("usuarios")) {
                 Log.d("Entro", "YES");
-                try{
+                try {
                     String usuarios = jsonObject.getString("usuarios");
                     String[] parts = usuarios.split(",");
                     //Log.d("USER_ID",User_info.USER_ID);
                     for (int i = 0; i < parts.length; i++) {
-                        Log.d("NUMERO",parts[i]);
+                        Log.d("NUMERO", parts[i]);
                         if (parts[i].equals("12")) {
                             publicChannel.bind(jsonObject.getString("grupo"), this);
                             //newEvent(jsonObject.getString("grupo"));
                             Log.e("Se agrego a un nuevo Grupo", "JEJETL");
                         }
                     }
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -333,7 +334,7 @@ public class PusherService extends Service implements ConnectionEventListener, C
                 String mensj = "";
                 String titulo = "";
                 String id = "";
-                try{
+                try {
                     mensj = jsonObject.getString("message");
                     titulo = jsonObject.getString("title");
                     id = jsonObject.getString("time");

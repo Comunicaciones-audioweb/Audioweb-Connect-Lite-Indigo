@@ -9,19 +9,26 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
-import mx.com.audioweb.indigolite.ClienteHttp;
-import mx.com.audioweb.indigolite.R;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import mx.com.audioweb.indigolite.ClienteHttp;
+import mx.com.audioweb.indigolite.R;
+
 public class Citas extends Activity {
+    public static Activity ccita;
     String name, mydate, userName, contact, tipo = "remota", emp, cont;
     int duration = Toast.LENGTH_SHORT, size;
     Button btnShowLocation;
-    public static Activity ccita;
     TextView txtLat, txtTime;
     boolean citainic, cita = true;
     EditText Empresa, Contacto;
@@ -215,8 +222,8 @@ public class Citas extends Activity {
     }
 
     public class CitasTask extends AsyncTask<String, Void, Boolean> {
-        private Context context;
         ArrayList<Cita> citas_list;
+        private Context context;
         private Bundle informacion;
         private String id;
 

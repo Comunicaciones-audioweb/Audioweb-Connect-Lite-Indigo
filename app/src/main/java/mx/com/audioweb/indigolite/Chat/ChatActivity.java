@@ -13,27 +13,43 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import com.parse.*;
-import mx.com.audioweb.indigolite.R;
+
+import com.parse.FindCallback;
+import com.parse.LogInCallback;
+import com.parse.ParseAnonymousUtils;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import mx.com.audioweb.indigolite.R;
+
 
 public class ChatActivity extends ActionBarActivity {
 
-    private static final String TAG = ChatActivity.class.getName();
-    private static String sUserId;
-    public static int Size = 0;
     public static final String USER_ID_KEY = "userId";
+    private static final String TAG = ChatActivity.class.getName();
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    public static int Size = 0;
+    private static String sUserId;
     private EditText etMessage;
     private Button btSend;
     private ListView lvChat;
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
+    // Defines a runnable which is run every 100ms
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            refreshMessages();
+            handler.postDelayed(this, 100);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,20 +111,18 @@ public class ChatActivity extends ActionBarActivity {
         SharedPreferences preferences;
         preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String UsName = preferences.getString("User Name", null);
-        Log.e("VALORR--------->",UsName);
+        Log.e("VALORR--------->", UsName);
         final String uname;
-        if(UsName.contains("."))
-        {
+        if (UsName.contains(".")) {
             String parts[] = UsName.split("\\.");
             System.out.print(parts[0]);
             String u = parts[0];
             String n = parts[1];
-            String user = (String) u.subSequence(0,1);
-            String name = (String) n.subSequence(0,1);
-            uname = user+name;
-        }
-        else {
-            uname = (String) UsName.subSequence(0,2);
+            String user = (String) u.subSequence(0, 1);
+            String name = (String) n.subSequence(0, 1);
+            uname = user + name;
+        } else {
+            uname = (String) UsName.subSequence(0, 2);
         }
         lvChat.setAdapter(mAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -143,12 +157,11 @@ public class ChatActivity extends ActionBarActivity {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             public void done(List<Message> messages, ParseException e) { // returns list of messages
                 if (e == null) {
-                    if (messages.size() != Size){
+                    if (messages.size() != Size) {
                         lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
                         Size = messages.size();
-                    }
-                    else{
-                        if(lvChat.getScrollBarSize() > 0) {
+                    } else {
+                        if (lvChat.getScrollBarSize() > 0) {
                             lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
                         }
                     }
@@ -163,16 +176,6 @@ public class ChatActivity extends ActionBarActivity {
             }
         });
     }
-
-
-    // Defines a runnable which is run every 100ms
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            refreshMessages();
-            handler.postDelayed(this, 100);
-        }
-    };
 
     private void refreshMessages() {
         receiveMessage();

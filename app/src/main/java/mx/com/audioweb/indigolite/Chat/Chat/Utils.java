@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager;
  */
 public class Utils {
 
-    public static AlertDialog showDialog(Context ctx,String msg, String btn1,String btn2,DialogInterface.OnClickListener listener1, DialogInterface.OnClickListener listener2) {
+    public static AlertDialog showDialog(Context ctx, String msg, String btn1, String btn2, DialogInterface.OnClickListener listener1, DialogInterface.OnClickListener listener2) {
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setMessage(msg).setCancelable(false).setPositiveButton(btn1, listener1);
         if (btn2 != null && listener2 != null) {
@@ -23,43 +23,44 @@ public class Utils {
         alert.show();
         return alert;
     }
-    public static AlertDialog showDialog(Context ctx , String msg){
-            return showDialog(ctx,msg, new DialogInterface.OnClickListener(){
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
+
+    public static AlertDialog showDialog(Context ctx, String msg) {
+        return showDialog(ctx, msg, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
     }
 
-    public static AlertDialog showDialog(Context ctx, String msg, DialogInterface.OnClickListener listener){
-        return showDialog(ctx,msg,ctx.getString(android.R.string.ok),null,listener,null);
+    public static AlertDialog showDialog(Context ctx, String msg, DialogInterface.OnClickListener listener) {
+        return showDialog(ctx, msg, ctx.getString(android.R.string.ok), null, listener, null);
     }
 
-    public static AlertDialog showDialog(Context ctx, int msg){
+    public static AlertDialog showDialog(Context ctx, int msg) {
         return showDialog(ctx, ctx.getString(msg));
     }
 
-    public static void showDialog(Context ctx, int title, int msg, DialogInterface.OnClickListener listener){
+    public static void showDialog(Context ctx, int title, int msg, DialogInterface.OnClickListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        builder.setMessage(msg).setCancelable(false).setPositiveButton(android.R.string.ok,listener);
+        builder.setMessage(msg).setCancelable(false).setPositiveButton(android.R.string.ok, listener);
         builder.setTitle(title);
         AlertDialog alert = builder.create();
         alert.show();
     }
 
-    public static final void hideKeyBoard(Activity ctx){
-        if(ctx.getCurrentFocus() != null){
+    public static final void hideKeyBoard(Activity ctx) {
+        if (ctx.getCurrentFocus() != null) {
             InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(ctx.getCurrentFocus().getWindowToken(),0);
+            imm.hideSoftInputFromWindow(ctx.getCurrentFocus().getWindowToken(), 0);
         }
     }
 
-    public static final void hideKeyBoard(Activity ctx , View v){
-        try{
-            InputMethodManager imm =(InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(v.getWindowToken(),0);
-        }catch (Exception e){
+    public static final void hideKeyBoard(Activity ctx, View v) {
+        try {
+            InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

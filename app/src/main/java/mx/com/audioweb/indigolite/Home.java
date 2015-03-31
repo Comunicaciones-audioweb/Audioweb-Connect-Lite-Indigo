@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,9 +24,12 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+
+import java.util.ArrayList;
+
 import mx.com.audioweb.indigolite.AudioConference.AudioConferencia;
 import mx.com.audioweb.indigolite.Chat.Chat.UserList;
-import mx.com.audioweb.indigolite.Chat.ChatActivity;
 import mx.com.audioweb.indigolite.Citas.Cita;
 import mx.com.audioweb.indigolite.Citas.Citas_list;
 import mx.com.audioweb.indigolite.LiveStreaming.LiveStreaming;
@@ -35,37 +37,43 @@ import mx.com.audioweb.indigolite.Notifications.Group;
 import mx.com.audioweb.indigolite.Notifications.Notification_List;
 import mx.com.audioweb.indigolite.Notifications.PusherService;
 import mx.com.audioweb.indigolite.TimeTracker.activity.TimeTracking_Activity;
-import org.json.JSONException;
-
-import java.util.ArrayList;
 
 
 public class Home extends Activity implements View.OnClickListener {
 
-    private static final String TAG = "TAG" ;
-    public ImageButton TT, LS, C, AC,NOT,CT;
+    private static final String TAG = "TAG";
+    public static Context mContext;
+    public ImageButton TT, LS, C, AC, NOT, CT;
     public AlertDialog.Builder alertDialogBuilder;
     public AlertDialog alertDialog;
-    SharedPreferences myPrefs;
     public String userName;
+    public String uid;
+    SharedPreferences myPrefs;
     SharedPreferences.Editor edit;
-    public static Context mContext;
     private ArrayList<User_info> userinfos;
     private ArrayList<Group> groups;
 
-    public String uid;
+    public static void setDefaults(String key, String value, Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
 
-
+    public static String getDefaults(String key, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        final String user=(mSharedPreference.getString("userName", "Default_Value"));
-        String pass=(mSharedPreference.getString("passWord", "Default_Value"));
-        Log.e("DATOS-->",user+" -> "+pass);
-        Log.e("USERLIST",String.valueOf(UserList.user));
-        if(UserList.user == null) {
+        final SharedPreferences mSharedPreference = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        final String user = (mSharedPreference.getString("userName", "Default_Value"));
+        String pass = (mSharedPreference.getString("passWord", "Default_Value"));
+        Log.e("DATOS-->", user + " -> " + pass);
+        Log.e("USERLIST", String.valueOf(UserList.user));
+        if (UserList.user == null) {
             ParseUser.logInInBackground(user, pass, new LogInCallback() {
 
                 @Override
@@ -76,8 +84,8 @@ public class Home extends Activity implements View.OnClickListener {
                         UserList.user = parseUser;
                         userName = UserList.user.getString("Name");
                         Log.e("USER", UserList.user.getUsername());
-                        Log.e("USERNAME-->",UserList.user.getString("Name"));
-                        if(userName.equals("0")) {
+                        Log.e("USERNAME-->", UserList.user.getString("Name"));
+                        if (userName.equals("0")) {
                             showDialog(0);
                         }
 
@@ -89,10 +97,9 @@ public class Home extends Activity implements View.OnClickListener {
                     }
                 }
             });
-        }
-        else{
+        } else {
             userName = UserList.user.getString("Name");
-            if(userName.equals("0")) {
+            if (userName.equals("0")) {
                 showDialog(0);
             }
         }
@@ -122,7 +129,7 @@ public class Home extends Activity implements View.OnClickListener {
         LS = (ImageButton) findViewById(R.id.imageButton4);
         C = (ImageButton) findViewById(R.id.imageButton5);
         NOT = (ImageButton) findViewById(R.id.imageButton6);
-        CT =(ImageButton) findViewById(R.id.imageButton3);
+        CT = (ImageButton) findViewById(R.id.imageButton3);
 
         AC.setOnClickListener(this);
         TT.setOnClickListener(this);
@@ -181,7 +188,7 @@ public class Home extends Activity implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 Log.d(TAG, "User name: " + value);
-                UserList.user.put("Name",value);
+                UserList.user.put("Name", value);
                 UserList.user.saveInBackground();
                 return;
             }
@@ -204,6 +211,7 @@ public class Home extends Activity implements View.OnClickListener {
         inflater.inflate(R.menu.home, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -273,7 +281,7 @@ public class Home extends Activity implements View.OnClickListener {
                 startActivity(new Intent(this, Notification_List.class));
                 break;
             case R.id.imageButton3:
-                startActivity(new Intent(Home.this,UserList.class));
+                startActivity(new Intent(Home.this, UserList.class));
                 break;
         }
     }
@@ -294,9 +302,62 @@ public class Home extends Activity implements View.OnClickListener {
         Bundle uid = new Bundle();
         uid.putSerializable("uid", id);
         //startActivity(new Intent(this, Citas.class).putExtras(uid));
-        new CitasTask(getApplicationContext(),id).execute();
+        new CitasTask(getApplicationContext(), id).execute();
         //finish();
     }
+
+
+   /* class ChannelAcTask extends AsyncTask<String, Void, Boolean> {
+        private Context context;
+        private String canal;
+        private Bundle informacion;
+
+        public ChannelAcTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String usr_id = params[0];
+
+            try {
+                ClienteHttp clienteHttp = new ClienteHttp();
+
+                Log.i("ID->>", usr_id);
+                canal = clienteHttp.getChannel(usr_id);
+
+                Log.e("CHANNEL-->",canal);
+                setDefaults("channel",canal,channel_context);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.e("Contactos", "Error cargando contactos");
+            } catch (Exception e) {
+                Log.e("Contactos", "Error inesperado");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            Log.d("ContactosTask", "Entro onPostExecute");
+            new GroupAcTask(getApplicationContext(), groups).execute(myPrefs.getString("User Id", ""));
+
+        }
+
+    }*/
+
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+        new GroupAcTask(getApplicationContext(), groups).execute(myPrefs.getString("User Id", ""));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        new GroupAcTask(getApplicationContext(), groups).execute(myPrefs.getString("User Id", ""));
+    }*/
 
     class NumeroAcTask extends AsyncTask<String, Void, Boolean> {
         private Context context;
@@ -388,13 +449,13 @@ public class Home extends Activity implements View.OnClickListener {
         @Override
         protected void onPostExecute(Boolean result) {
             Log.d("ContactosTask", "Entro onPostExecute");
-            if(isMyServiceRunning(PusherService.class)){
+            if (isMyServiceRunning(PusherService.class)) {
                 Log.e("UserDetailScreen", "Service is already running");
                 PusherService.achieveExpectedConnectionState();
 
-            }else{
+            } else {
                 Log.e("UserDetailScreen", "Service started first time");
-                startService(new Intent(getApplicationContext() ,PusherService.class));
+                startService(new Intent(getApplicationContext(), PusherService.class));
 
             }
 
@@ -402,84 +463,31 @@ public class Home extends Activity implements View.OnClickListener {
         }
 
     }
-
-
-   /* class ChannelAcTask extends AsyncTask<String, Void, Boolean> {
-        private Context context;
-        private String canal;
-        private Bundle informacion;
-
-        public ChannelAcTask(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            String usr_id = params[0];
-
-            try {
-                ClienteHttp clienteHttp = new ClienteHttp();
-
-                Log.i("ID->>", usr_id);
-                canal = clienteHttp.getChannel(usr_id);
-
-                Log.e("CHANNEL-->",canal);
-                setDefaults("channel",canal,channel_context);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Log.e("Contactos", "Error cargando contactos");
-            } catch (Exception e) {
-                Log.e("Contactos", "Error inesperado");
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            Log.d("ContactosTask", "Entro onPostExecute");
-            new GroupAcTask(getApplicationContext(), groups).execute(myPrefs.getString("User Id", ""));
-
-        }
-
-    }*/
-
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        new GroupAcTask(getApplicationContext(), groups).execute(myPrefs.getString("User Id", ""));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        new GroupAcTask(getApplicationContext(), groups).execute(myPrefs.getString("User Id", ""));
-    }*/
 
     public class CitasTask extends AsyncTask<String, Void, Boolean> {
-        private Context context;
         ArrayList<Cita> citas_list;
+        private Context context;
         private Bundle informacion;
         private String id;
 
-        public CitasTask(Context context,  String id) {
+        public CitasTask(Context context, String id) {
             this.context = context;
             this.id = id;
         }
 
         @Override
         protected Boolean doInBackground(String... params) {
-             try {
+            try {
                 ClienteHttp clienteHttp = new ClienteHttp();
 
                 Log.i("ID->>", this.id);
                 citas_list = clienteHttp.GetCitas(this.id);
-                Log.i("CITA_LIST--??",String.valueOf(citas_list));
+                Log.i("CITA_LIST--??", String.valueOf(citas_list));
                 if (citas_list == null) {
                     Log.d("Message", "No existen citas");
                 } else {
 
-                    Log.e("CITAS",String.valueOf(citas_list));
+                    Log.e("CITAS", String.valueOf(citas_list));
 
 
                 }
@@ -506,17 +514,6 @@ public class Home extends Activity implements View.OnClickListener {
 
         }
 
-    }
-    public static void setDefaults(String key, String value, Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(key, value);
-        editor.commit();
-    }
-
-    public static String getDefaults(String key, Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(key, null);
     }
 }
 

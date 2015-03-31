@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.util.HashMap;
-
 /**
  * Created by Juan Acosta on 11/5/2014.
  */

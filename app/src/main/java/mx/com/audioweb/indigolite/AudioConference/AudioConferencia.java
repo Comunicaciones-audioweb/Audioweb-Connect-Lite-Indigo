@@ -1,9 +1,7 @@
 package mx.com.audioweb.indigolite.AudioConference;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import mx.com.audioweb.indigolite.R;
 
 public class AudioConferencia extends Activity {
@@ -34,12 +33,12 @@ public class AudioConferencia extends Activity {
             public void onClick(View v) {
 
 
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    //callIntent.setData(Uri.parse("tel:018000832002" + PhoneNumberUtils.PAUSE + npin + "#"));
-                    callIntent.setData(Uri.parse("tel:5528814600" + PhoneNumberUtils.PAUSE + CA.getText().toString() + "#" + PhoneNumberUtils.PAUSE + "#"));
-                    startActivity(callIntent);
-                    Log.i("LLAMANDO ", callIntent.toString());
-                }
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                //callIntent.setData(Uri.parse("tel:018000832002" + PhoneNumberUtils.PAUSE + npin + "#"));
+                callIntent.setData(Uri.parse("tel:5528814600" + PhoneNumberUtils.PAUSE + CA.getText().toString() + "#" + PhoneNumberUtils.PAUSE + "#"));
+                startActivity(callIntent);
+                Log.i("LLAMANDO ", callIntent.toString());
+            }
 
         });
 

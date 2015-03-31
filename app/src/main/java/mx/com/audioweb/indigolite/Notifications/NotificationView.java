@@ -6,6 +6,7 @@ package mx.com.audioweb.indigolite.Notifications;
 
 import android.app.Activity;
 import android.os.Bundle;
+
 import mx.com.audioweb.indigolite.R;
 
 public class NotificationView extends Activity {

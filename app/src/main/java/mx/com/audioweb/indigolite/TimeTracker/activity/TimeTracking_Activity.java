@@ -12,14 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
 import com.bugsense.trace.BugSenseHandler;
+
+import org.json.JSONObject;
+
 import mx.com.audioweb.indigolite.R;
 import mx.com.audioweb.indigolite.TimeTracker.Shared_notifications;
 import mx.com.audioweb.indigolite.TimeTracker.api.CONFIG;
 import mx.com.audioweb.indigolite.TimeTracker.api.GpsTracker;
 import mx.com.audioweb.indigolite.TimeTracker.task.SalesCurrentLocationTask;
 import mx.com.audioweb.indigolite.TimeTracker.task.VoiceAuthenticationTask;
-import org.json.JSONObject;
 
 /**
  * Created by Juan Acosta on 10/14/2014.
@@ -27,24 +30,24 @@ import org.json.JSONObject;
 
 public class TimeTracking_Activity extends Activity {
 
-    private String authVoiceID , getUserName , webURL , voice_id;
-    NotificationManager mNotificationManager;
-    SharedPreferences myPrefs;
-    JSONObject json;
-    int result;
-    boolean isRegistered , isAuth;
-    SharedPreferences.Editor edit;
-    GpsTracker gpsTracker;
-    CheckBox notificacion;
     private static Context mContext;
-    double stringLatitude , stringLongitude;
-    SharedPreferences preferences;
-    Shared_notifications session;
     /**
      * Instance of our library
      */
 
     protected boolean doubleBackToExitPressedOnce = false;
+    NotificationManager mNotificationManager;
+    SharedPreferences myPrefs;
+    JSONObject json;
+    int result;
+    boolean isRegistered, isAuth;
+    SharedPreferences.Editor edit;
+    GpsTracker gpsTracker;
+    CheckBox notificacion;
+    double stringLatitude, stringLongitude;
+    SharedPreferences preferences;
+    Shared_notifications session;
+    private String authVoiceID, getUserName, webURL, voice_id;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -57,16 +60,14 @@ public class TimeTracking_Activity extends Activity {
         notificacion = (CheckBox) findViewById(R.id.checknotification);
 
 
-
-        if(myPrefs.getBoolean("isVoiceAuthenticated", false)){
-            Intent mainIntent = new Intent( mContext , ActivityUserDetailScreen.class);
+        if (myPrefs.getBoolean("isVoiceAuthenticated", false)) {
+            Intent mainIntent = new Intent(mContext, ActivityUserDetailScreen.class);
             startActivity(mainIntent);
             finish();
         }
 
         gpsTracker = new GpsTracker(mContext);
-        if(!gpsTracker.canGetLocation())
-        {
+        if (!gpsTracker.canGetLocation()) {
             gpsTracker.showSettingsAlert();
 
         }
@@ -85,6 +86,7 @@ public class TimeTracking_Activity extends Activity {
         Button login = (Button) findViewById(R.id.auth_button);
         login.setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_button));
     }
+
     /**
      * Get the result from the registration
      *
@@ -108,11 +110,11 @@ public class TimeTracking_Activity extends Activity {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                VoiceAuthenticationTask authtask = new VoiceAuthenticationTask(mContext , json);
+                VoiceAuthenticationTask authtask = new VoiceAuthenticationTask(mContext, json);
                 try {
                     if (!CONFIG.isNetworkAvailable(mContext)) {
                         Toast.makeText(mContext, "Check your internet connection", Toast.LENGTH_LONG).show();
-                    }else{
+                    } else {
                         result = authtask.execute(webURL).get();
                         Log.e("Result", "" + result);
                     }
@@ -120,8 +122,7 @@ public class TimeTracking_Activity extends Activity {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                if(result == 200)
-                {
+                if (result == 200) {
                     isAuth = true;
                     edit.putBoolean("is_auhtentication", true);
                     edit.commit();
@@ -136,13 +137,12 @@ public class TimeTracking_Activity extends Activity {
         boolean checked = ((CheckBox) view).isChecked();
 
         // Check which checkbox was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.checknotification:
-                if(checked){
+                if (checked) {
                     session.createNotification();
 
-                }
-                else {
+                } else {
                     session.clearNotification();
 
                 }
@@ -151,6 +151,7 @@ public class TimeTracking_Activity extends Activity {
 
         }
     }
+
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
@@ -162,13 +163,12 @@ public class TimeTracking_Activity extends Activity {
     /**
      * Start the login process
      *
-     * @param v
-     *            button
+     * @param v button
      */
     public void startAuthenticateClick(View v) {
         if (!CONFIG.isNetworkAvailable(mContext)) {
             Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_LONG).show();
-        }else{
+        } else {
 
             if (gpsTracker.canGetLocation()) {
                 try {
@@ -176,13 +176,13 @@ public class TimeTracking_Activity extends Activity {
                     stringLongitude = gpsTracker.getLongitude();
 
 
-                    if(stringLatitude != 0 && stringLongitude != 0){
+                    if (stringLatitude != 0 && stringLongitude != 0) {
                         json.put("username", getUserName);
-                        json.put("latitude",stringLatitude);
+                        json.put("latitude", stringLatitude);
                         json.put("longitude", stringLongitude);
                         json.put("is_auth", 1);
                         Log.e("json data", json.toString());
-                        SalesCurrentLocationTask login = new SalesCurrentLocationTask(mContext,json);
+                        SalesCurrentLocationTask login = new SalesCurrentLocationTask(mContext, json);
                         login.execute(CONFIG.SERVER_URL + "location");
 
                         preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -194,10 +194,10 @@ public class TimeTracking_Activity extends Activity {
                         edit.commit();
                         Intent returnIntent = new Intent();
                         setResult(RESULT_OK, returnIntent);
-                        startActivity(new Intent(mContext,	ActivityUserDetailScreen.class));
+                        startActivity(new Intent(mContext, ActivityUserDetailScreen.class));
                         finish();
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

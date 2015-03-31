@@ -1,7 +1,6 @@
 package mx.com.audioweb.indigolite;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,25 +20,25 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import org.json.JSONObject;
+
 import mx.com.audioweb.indigolite.Chat.Chat.UserList;
-import mx.com.audioweb.indigolite.Chat.Chat.Utils;
 import mx.com.audioweb.indigolite.TimeTracker.Shared_notifications;
 import mx.com.audioweb.indigolite.TimeTracker.api.CONFIG;
 import mx.com.audioweb.indigolite.TimeTracker.task.UserLoginTask;
-import org.json.JSONObject;
 
 
 public class Login extends Activity {
 
-    EditText User, Pass;
-    JSONObject jData,json;
-    Button LogIn;
     public static String UserName;
+    EditText User, Pass;
+    JSONObject jData, json;
+    Button LogIn;
     String userName, password, webURL, getUserName, android_id;
-    private Bundle id;
     SharedPreferences preferences;
-    Context mContext ;
+    Context mContext;
     boolean authVoiceID = false, isLogin, isAuth = false, callService = true;
+    private Bundle id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +100,8 @@ public class Login extends Activity {
                     userName = User.getText().toString();
                     password = Pass.getText().toString();
                     preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-                    edit.putString("userName",userName);
-                    edit.putString("passWord",password);
+                    edit.putString("userName", userName);
+                    edit.putString("passWord", password);
                     edit.commit();
 
                     webURL = CONFIG.SERVER_URL + "salesmen/login";
@@ -136,31 +135,30 @@ public class Login extends Activity {
                             id = new Bundle();
                             id.putSerializable("uid", user_id);
                             edit.putBoolean("isUserLogin", true);
-                            edit.putBoolean("notification",false);
+                            edit.putBoolean("notification", false);
                             session.createNotification();
                             edit.putBoolean("Call_Service", callService);
                             edit.commit();
                             authVoiceID = jData.getString("smen_auth_voice_id").matches("0");
 
-                            parseUser.setEmail(userName+"@audioweb.com.mx");
+                            parseUser.setEmail(userName + "@audioweb.com.mx");
                             parseUser.setPassword(password);
                             parseUser.setUsername(userName);
-                            parseUser.put("Name","0");
+                            parseUser.put("Name", "0");
 
                             parseUser.signUpInBackground(new SignUpCallback() {
                                 @Override
                                 public void done(ParseException e) {
                                     //dialog.dismiss();
-                                    if(e == null){
+                                    if (e == null) {
                                         UserList.user = parseUser;
                                         //startActivity(new Intent(Register.this,UserList.class));
                                         startActivity(new Intent(mContext, Home.class).putExtras(id));
                                         setResult(RESULT_OK);
                                         finish();
-                                    }
-                                    else{
+                                    } else {
                                         //Utils.showDialog(Register.this, getString(R.string.err_singup) + " " + e.getMessage());
-                                        Log.e("ERROR REGISTRO-->",getString(R.string.err_singup) + " " + e.getMessage());
+                                        Log.e("ERROR REGISTRO-->", getString(R.string.err_singup) + " " + e.getMessage());
                                         e.printStackTrace();
                                         ParseUser.logInInBackground(userName, password, new LogInCallback() {
 
@@ -168,12 +166,12 @@ public class Login extends Activity {
                                             public void done(ParseUser parseUser, ParseException e) {
                                                 //dialog.dismiss();
                                                 if (parseUser != null) {
-                                                    Log.e("ERROR REGISTRO-->",getString(R.string.title_activity_login) + " " + userName);
+                                                    Log.e("ERROR REGISTRO-->", getString(R.string.title_activity_login) + " " + userName);
                                                     UserList.user = parseUser;
                                                     startActivity(new Intent(mContext, Home.class).putExtras(id));
                                                     finish();
                                                 } else {
-                                                    Log.e("ERROR REGISTRO-->",getString(R.string.err_login) + " " + e.getMessage());
+                                                    Log.e("ERROR REGISTRO-->", getString(R.string.err_login) + " " + e.getMessage());
                                                     //Utils.showDialog(Login.this, getString(R.string.err_login) + " " + e.getMessage());
                                                     e.printStackTrace();
                                                 }

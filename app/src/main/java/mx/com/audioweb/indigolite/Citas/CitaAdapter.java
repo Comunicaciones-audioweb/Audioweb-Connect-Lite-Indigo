@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import mx.com.audioweb.indigolite.R;
 
 import java.util.ArrayList;
+
+import mx.com.audioweb.indigolite.R;
 
 /**
  * Created by Juan Acosta on 11/10/2014.
@@ -58,7 +59,7 @@ public class CitaAdapter extends BaseAdapter {
                 String id = cita_items.get(position).getId();
                 Bundle cid = new Bundle();
                 cid.putSerializable("citaid", id);
-                Log.d("ID-->",id);
+                Log.d("ID-->", id);
                 context.startActivity(new Intent(context, Encuesta.class).putExtras(cid).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });

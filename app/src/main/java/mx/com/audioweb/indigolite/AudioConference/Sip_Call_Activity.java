@@ -5,7 +5,11 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.net.sip.*;
+import android.net.sip.SipAudioCall;
+import android.net.sip.SipException;
+import android.net.sip.SipManager;
+import android.net.sip.SipProfile;
+import android.net.sip.SipRegistrationListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -15,9 +19,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
-import mx.com.audioweb.indigolite.R;
 
 import java.text.ParseException;
+
+import mx.com.audioweb.indigolite.R;
 
 public class Sip_Call_Activity extends Activity implements View.OnClickListener {
 
@@ -33,9 +38,9 @@ public class Sip_Call_Activity extends Activity implements View.OnClickListener 
     public MyPhoneStateListener myListener;
     public boolean is3g;
     public Long time;
-    TextView labelView;
-    Boolean mudo,conf = true;
     public Chronometer chronometer;
+    TextView labelView;
+    Boolean mudo, conf = true;
     private Handler mDrawerHandler;
 
     @Override
@@ -71,7 +76,7 @@ public class Sip_Call_Activity extends Activity implements View.OnClickListener 
     }
 
     public void initializeLocalProfile() {
-            if (manager == null) {
+        if (manager == null) {
             return;
         }
 
@@ -109,24 +114,24 @@ public class Sip_Call_Activity extends Activity implements View.OnClickListener 
 
                 public void onRegistrationDone(String localProfileUri, long expiryTime) {
                     updateStatus("Ready");
-                   if(conf) {
-                       conf = false;
-                       mDrawerHandler.postDelayed(new Runnable() {
+                    if (conf) {
+                        conf = false;
+                        mDrawerHandler.postDelayed(new Runnable() {
 
-                           @Override
-                           public void run() {
-                               try {
-                                   Thread.sleep(1000);
-                                   initiateCall();
-                                   chronometer.setBase(SystemClock.elapsedRealtime());
-                                   chronometer.start();
-                               } catch (InterruptedException e) {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1000);
+                                    initiateCall();
+                                    chronometer.setBase(SystemClock.elapsedRealtime());
+                                    chronometer.start();
+                                } catch (InterruptedException e) {
 
-                                   e.printStackTrace();
-                               }
-                           }
-                       }, 600);
-                   }
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 600);
+                    }
                 }
 
                 public void onRegistrationFailed(String localProfileUri, int errorCode,
@@ -200,7 +205,7 @@ public class Sip_Call_Activity extends Activity implements View.OnClickListener 
                         int num = Integer.parseInt(codigo);
                         String number = String.valueOf(num);
 
-                        if(codigo.startsWith("0")){
+                        if (codigo.startsWith("0")) {
                             call.sendDtmf(+0);
                             Log.d("Digit ", String.valueOf(0));
                             Thread.sleep(600);

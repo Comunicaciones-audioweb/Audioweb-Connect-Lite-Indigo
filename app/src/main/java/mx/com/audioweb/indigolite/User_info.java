@@ -4,13 +4,13 @@ package mx.com.audioweb.indigolite;
  * Created by Juan Acosta on 10/22/2014.
  */
 public class User_info {
+    public static String USER_ID;
     private String id;
     private String smen_id;
     private String ac_org_code;
     private String ac_part_code;
     private String ac_usuario;
     private String COS;
-    public static String USER_ID;
 
     public String getId() {
 

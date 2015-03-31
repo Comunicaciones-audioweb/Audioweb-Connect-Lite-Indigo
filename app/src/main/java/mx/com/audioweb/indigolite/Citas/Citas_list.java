@@ -7,20 +7,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
-import com.nispok.snackbar.listeners.ActionClickListener;
-import mx.com.audioweb.indigolite.R;
 
 import java.util.ArrayList;
 
+import mx.com.audioweb.indigolite.R;
+
 public class Citas_list extends Activity {
 
+    public static int citalist = 0;
+    Button addcita;
     private ListView CitasList;
     private ArrayList<Cita> citas;
     private CitaAdapter adapter;
-    public static int citalist = 0;
-    Button addcita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +43,14 @@ public class Citas_list extends Activity {
         });
 
         String valor = Encuesta.Value;
-        Log.d("Valor",valor);
+        Log.d("Valor", valor);
         if (valor.equals("Fin Cita")) {
             SnackbarManager.show(
                     Snackbar.with(getApplicationContext()) // context
                             .text("Fin de la cita") // text to display
                     // action button's ActionClickListener
                     , this); // activity where it is displayed
-        }
-        else if(valor.equals("Inicio Cita")){
+        } else if (valor.equals("Inicio Cita")) {
             SnackbarManager.show(
                     Snackbar.with(getApplicationContext()) // context
                             .text("Inicio su Cita") // text to display

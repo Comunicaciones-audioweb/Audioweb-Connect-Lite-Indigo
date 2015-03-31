@@ -1,8 +1,8 @@
 package mx.com.audioweb.indigolite.Chat;
 
 import android.app.Application;
+
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 /**
  * Created by pramos on 2/18/15.

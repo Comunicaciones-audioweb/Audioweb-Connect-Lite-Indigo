@@ -16,17 +16,25 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+
 import com.bugsense.trace.BugSenseHandler;
-import mx.com.audioweb.indigolite.R;
-import mx.com.audioweb.indigolite.TimeTracker.Shared_notifications;
-import mx.com.audioweb.indigolite.TimeTracker.activity.TimeTracking_Activity;
-import mx.com.audioweb.indigolite.TimeTracker.task.SalesCurrentLocationTask;
+
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import mx.com.audioweb.indigolite.R;
+import mx.com.audioweb.indigolite.TimeTracker.Shared_notifications;
+import mx.com.audioweb.indigolite.TimeTracker.activity.TimeTracking_Activity;
+import mx.com.audioweb.indigolite.TimeTracker.task.SalesCurrentLocationTask;
 
 //import com.ecosmob.salestracker.activity.ActivityVoiceAuthenticationScreen;
 

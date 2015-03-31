@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -19,97 +20,100 @@ import java.io.InputStream;
 
 public class CONFIG {
 
-	/** Server India **/
-	//public static final String SERVER_URL = "http://206.225.86.9/timetracker/V1/";
-	//public static final String SERVER_URL = "http://192.168.1.101/timetracker/V1/";
-	/** Server AW **/
-	public static final String SERVER_URL = "http://66.226.72.48/timetracker/V1/";
+    /** Server India **/
+    //public static final String SERVER_URL = "http://206.225.86.9/timetracker/V1/";
+    //public static final String SERVER_URL = "http://192.168.1.101/timetracker/V1/";
+    /**
+     * Server AW *
+     */
+    public static final String SERVER_URL = "http://66.226.72.48/timetracker/V1/";
 
 
-	public static boolean isNetworkAvailable(Context context) {
-		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo activeNetworkInfo = connectivityManager
-				.getActiveNetworkInfo();
-		return (activeNetworkInfo != null) && activeNetworkInfo.isConnected();
-	}
-	public static JSONObject getLocationInfo(double lat, double lng) {
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager
+                .getActiveNetworkInfo();
+        return (activeNetworkInfo != null) && activeNetworkInfo.isConnected();
+    }
 
-		
+    public static JSONObject getLocationInfo(double lat, double lng) {
 
-		HttpGet httpGet = new HttpGet("http://maps.googleapis.com/maps/api/geocode/json?latlng="+ lat+","+lng +"&sensor=true");
-		HttpClient client = new DefaultHttpClient();
-		HttpResponse response;
-		StringBuilder stringBuilder = new StringBuilder();
 
-		try {
-			response = client.execute(httpGet);
-			HttpEntity entity = response.getEntity();
-			InputStream stream = entity.getContent();
-			int b;
-			while ((b = stream.read()) != -1) {
-				stringBuilder.append((char) b);
-			}
-		} catch (ClientProtocolException e) {
-		} catch (IOException e) {
-		}
+        HttpGet httpGet = new HttpGet("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true");
+        HttpClient client = new DefaultHttpClient();
+        HttpResponse response;
+        StringBuilder stringBuilder = new StringBuilder();
 
-		JSONObject jsonObject = new JSONObject();
-		try {
-			jsonObject = new JSONObject(stringBuilder.toString());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+        try {
+            response = client.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            InputStream stream = entity.getContent();
+            int b;
+            while ((b = stream.read()) != -1) {
+                stringBuilder.append((char) b);
+            }
+        } catch (ClientProtocolException e) {
+        } catch (IOException e) {
+        }
 
-		return jsonObject;
-	}
-	public static String getCurrentLocationViaJSON(double lat, double lng) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = new JSONObject(stringBuilder.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-		JSONObject jsonObj = getLocationInfo(lat, lng);
-		Log.i("JSON string =>", jsonObj.toString());
+        return jsonObject;
+    }
 
-		String currentLocation = "testing";
-		String street_address = null;
-		String postal_code = null;
+    public static String getCurrentLocationViaJSON(double lat, double lng) {
 
-		try {
-			String status = jsonObj.getString("status").toString();
-			Log.i("status", status);
+        JSONObject jsonObj = getLocationInfo(lat, lng);
+        Log.i("JSON string =>", jsonObj.toString());
 
-			if(status.equalsIgnoreCase("OK")){
-				JSONArray results = jsonObj.getJSONArray("results");
-				int i = 0;
-				Log.i("i", i + "," + results.length()); //TODO delete this
-				do{
-					JSONObject r = results.getJSONObject(i);
-					JSONArray typesArray = r.getJSONArray("types");
-					String types = typesArray.getString(0);
-					Log.e("types", types);
+        String currentLocation = "testing";
+        String street_address = null;
+        String postal_code = null;
 
-					if(types.equalsIgnoreCase("route")){
-						street_address = r.getString("formatted_address").split(",")[0];
-						Log.i("short_name", street_address);
-					}else if(types.equalsIgnoreCase("postal_code")){
-						postal_code = r.getString("formatted_address");
-						Log.i("postal_code", postal_code);
-					}
+        try {
+            String status = jsonObj.getString("status").toString();
+            Log.i("status", status);
 
-					if(street_address!=null && postal_code!=null){
-						currentLocation = street_address + "," + postal_code;
-						Log.i("Current Location =>", currentLocation); //Delete this
-						i = results.length();
-					}
-					i++;
-				}while(i<results.length());
+            if (status.equalsIgnoreCase("OK")) {
+                JSONArray results = jsonObj.getJSONArray("results");
+                int i = 0;
+                Log.i("i", i + "," + results.length()); //TODO delete this
+                do {
+                    JSONObject r = results.getJSONObject(i);
+                    JSONArray typesArray = r.getJSONArray("types");
+                    String types = typesArray.getString(0);
+                    Log.e("types", types);
 
-				Log.i("JSON Geo Locatoin =>", currentLocation);
-				return currentLocation;
-			}
+                    if (types.equalsIgnoreCase("route")) {
+                        street_address = r.getString("formatted_address").split(",")[0];
+                        Log.i("short_name", street_address);
+                    } else if (types.equalsIgnoreCase("postal_code")) {
+                        postal_code = r.getString("formatted_address");
+                        Log.i("postal_code", postal_code);
+                    }
 
-		} catch (JSONException e) {
-			Log.e("testing", "Failed to load JSON");
-			e.printStackTrace();
-		}
-		return null;
-	}
+                    if (street_address != null && postal_code != null) {
+                        currentLocation = street_address + "," + postal_code;
+                        Log.i("Current Location =>", currentLocation); //Delete this
+                        i = results.length();
+                    }
+                    i++;
+                } while (i < results.length());
+
+                Log.i("JSON Geo Locatoin =>", currentLocation);
+                return currentLocation;
+            }
+
+        } catch (JSONException e) {
+            Log.e("testing", "Failed to load JSON");
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

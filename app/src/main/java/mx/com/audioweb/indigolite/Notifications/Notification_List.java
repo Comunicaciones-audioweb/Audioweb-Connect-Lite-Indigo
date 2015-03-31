@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import mx.com.audioweb.indigolite.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import mx.com.audioweb.indigolite.R;
 
 public class Notification_List extends Activity {
 
@@ -19,6 +20,24 @@ public class Notification_List extends Activity {
     public static RecyclerView recList;
     public static LinearLayoutManager llm;
     public static Context baseContext;
+    private static boolean activityVisible;
+
+    public static void log() {
+        LogTask task = (LogTask) new LogTask().execute();
+    }
+
+    public static boolean isActivityVisible() {
+        return activityVisible;
+
+    }
+
+    public static void activityResumed() {
+        activityVisible = true;
+    }
+
+    public static void activityPaused() {
+        activityVisible = false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +72,16 @@ public class Notification_List extends Activity {
         return result;
     }
 
-    public static void log() {
-        LogTask task = (LogTask) new LogTask().execute();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        activityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        activityPaused();
     }
 
     static class LogTask extends AsyncTask<Void, Void, Void> {
@@ -90,33 +117,6 @@ public class Notification_List extends Activity {
         }
 
 
-    }
-
-    public static boolean isActivityVisible() {
-        return activityVisible;
-
-    }
-
-    public static void activityResumed() {
-        activityVisible = true;
-    }
-
-    public static void activityPaused() {
-        activityVisible = false;
-    }
-
-    private static boolean activityVisible;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        activityResumed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        activityPaused();
     }
 
 }

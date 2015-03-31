@@ -12,9 +12,9 @@ public class RestartServiceReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.e(TAG, "onReceive");
- //   context.startService(new Intent(context, MainService.class));
-    Intent inService = new Intent(context,MainService.class);
-    context.startService(inService);
-        }
+        //   context.startService(new Intent(context, MainService.class));
+        Intent inService = new Intent(context, MainService.class);
+        context.startService(inService);
+    }
 
 }

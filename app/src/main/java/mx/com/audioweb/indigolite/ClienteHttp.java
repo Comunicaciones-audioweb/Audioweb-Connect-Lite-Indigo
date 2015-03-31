@@ -5,10 +5,10 @@ package mx.com.audioweb.indigolite;
  */
 
 import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import mx.com.audioweb.indigolite.Citas.Cita;
-import mx.com.audioweb.indigolite.Notifications.Group;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -26,111 +26,23 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import mx.com.audioweb.indigolite.Citas.Cita;
+import mx.com.audioweb.indigolite.Notifications.Group;
+
 /**
  * Created by Juan Acosta on 8/11/2014.
  */
 public class ClienteHttp {
 
     public static final String URL = "http://66.226.72.48/connect/webServices/";
-    public static final String Transmicion_Url ="http://66.226.72.48/connect/liveStreaming/transmision_adaptable.php?id=";
+    public static final String Transmicion_Url = "http://66.226.72.48/connect/liveStreaming/transmision_adaptable.php?id=";
     private static final String DATEF = "yyyy-MM-dd HH:mm:ss";
     private Gson gson = new GsonBuilder().setDateFormat(DATEF).create();
-
-
-    public ArrayList<User_info> acnum(String uid) throws JSONException {
-        BufferedReader bufferedReader = null;
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost request = new HttpPost(URL + "getConferenceNumber.php");
-        List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-        postParameters.add(new BasicNameValuePair("uid", uid));
-        try {
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(postParameters);
-            request.setEntity(entity);
-            HttpResponse response = httpClient.execute(request);
-            bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer stringBuffer = new StringBuffer();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuffer.append(line);
-            }
-            bufferedReader.close();
-            JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-            if (jsonArray != null) {
-                ArrayList<User_info> alertas = new ArrayList<User_info>();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    alertas.add(gson.fromJson(jsonArray.getJSONObject(i).toString(), User_info.class));
-                    Log.e("JSONOBJ", jsonArray.getJSONObject(i).toString());
-                }
-                return alertas;
-            } else {
-                return null;
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<Cita> GetCitas(String id) throws JSONException {
-        BufferedReader bufferedReader = null;
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost request = new HttpPost(URL + "getOpenCitas.php");
-        List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-        postParameters.add(new BasicNameValuePair("id", id));
-        try {
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(postParameters);
-            request.setEntity(entity);
-            HttpResponse response = httpClient.execute(request);
-            bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer stringBuffer = new StringBuffer();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuffer.append(line);
-            }
-            bufferedReader.close();
-            String value = stringBuffer.toString();
-            if (value.equals("null")) {
-                return null;
-            } else {
-                JSONArray jsonArray = new JSONArray(value);
-                Log.d("JARRAY",String.valueOf(jsonArray));
-                ArrayList<Cita> alertas = new ArrayList<Cita>();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    alertas.add(gson.fromJson(jsonArray.getJSONObject(i).toString(), Cita.class));
-                    Log.e("JSONOBJ", jsonArray.getJSONObject(i).toString());
-                }
-                return alertas;
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
 
     public static String iniciaCita(String smen_id, String tipo, String empresa, String contacto, String latitud1, String longitud1) {
         BufferedReader bufferedReader = null;
         DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost request = new HttpPost(URL + "doCrearCita.php");
+        HttpPost request = new HttpPost(URL + "doCrearCita.php");
         List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
         postParameters.add(new BasicNameValuePair("smen_id", smen_id));
         postParameters.add(new BasicNameValuePair("tipo", tipo));
@@ -252,6 +164,96 @@ public class ClienteHttp {
         return null;
     }
 
+    public ArrayList<User_info> acnum(String uid) throws JSONException {
+        BufferedReader bufferedReader = null;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost request = new HttpPost(URL + "getConferenceNumber.php");
+        List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+        postParameters.add(new BasicNameValuePair("uid", uid));
+        try {
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(postParameters);
+            request.setEntity(entity);
+            HttpResponse response = httpClient.execute(request);
+            bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer stringBuffer = new StringBuffer();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
+            }
+            bufferedReader.close();
+            JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+            if (jsonArray != null) {
+                ArrayList<User_info> alertas = new ArrayList<User_info>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    alertas.add(gson.fromJson(jsonArray.getJSONObject(i).toString(), User_info.class));
+                    Log.e("JSONOBJ", jsonArray.getJSONObject(i).toString());
+                }
+                return alertas;
+            } else {
+                return null;
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Cita> GetCitas(String id) throws JSONException {
+        BufferedReader bufferedReader = null;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost request = new HttpPost(URL + "getOpenCitas.php");
+        List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+        postParameters.add(new BasicNameValuePair("id", id));
+        try {
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(postParameters);
+            request.setEntity(entity);
+            HttpResponse response = httpClient.execute(request);
+            bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer stringBuffer = new StringBuffer();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
+            }
+            bufferedReader.close();
+            String value = stringBuffer.toString();
+            if (value.equals("null")) {
+                return null;
+            } else {
+                JSONArray jsonArray = new JSONArray(value);
+                Log.d("JARRAY", String.valueOf(jsonArray));
+                ArrayList<Cita> alertas = new ArrayList<Cita>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    alertas.add(gson.fromJson(jsonArray.getJSONObject(i).toString(), Cita.class));
+                    Log.e("JSONOBJ", jsonArray.getJSONObject(i).toString());
+                }
+                return alertas;
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Group> getGroups(String uid) throws JSONException {
         BufferedReader bufferedReader = null;
         HttpClient httpClient = new DefaultHttpClient();
@@ -269,7 +271,7 @@ public class ClienteHttp {
                 stringBuffer.append(line);
             }
             bufferedReader.close();
-            Log.e("JSON-->>",stringBuffer.toString());
+            Log.e("JSON-->>", stringBuffer.toString());
             JSONArray jsonArray = new JSONArray(stringBuffer.toString());
             String string = stringBuffer.toString();
             if (!string.equals("null")) {

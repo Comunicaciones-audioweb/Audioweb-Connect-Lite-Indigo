@@ -5,9 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import mx.com.audioweb.indigolite.R;
 
 import java.util.List;
+
+import mx.com.audioweb.indigolite.R;
 
 /**
  * Created by Juan Acosta on 1/8/2015.

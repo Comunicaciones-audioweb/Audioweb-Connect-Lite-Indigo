@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,11 +16,11 @@ import java.util.Map;
 public class SharedPreferencesExecutor<T> {
     private Context context;
 
-    public SharedPreferencesExecutor(Context context){
+    public SharedPreferencesExecutor(Context context) {
         this.context = context;
     }
 
-    public void saveData(String Key, T sharedPerferencesEntry){
+    public void saveData(String Key, T sharedPerferencesEntry) {
         SharedPreferences appSharedPerfs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         SharedPreferences.Editor perfsEditor = appSharedPerfs.edit();
         Gson gson = new Gson();
@@ -30,32 +30,32 @@ public class SharedPreferencesExecutor<T> {
         Log.d("JSONVAL", json);
     }
 
-    public T retreive(String Key, Class<T> clazz){
+    public T retreive(String Key, Class<T> clazz) {
         SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         Gson gson = new Gson();
         String json = appSharedPrefs.getString(Key, "");
         return (T) gson.fromJson(json, clazz);
     }
 
-    public ArrayList<T> retreiveAll(Class<T> clazz){
+    public ArrayList<T> retreiveAll(Class<T> clazz) {
         ArrayList<T> arrliTs = new ArrayList<T>();
         SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         Gson gson = new Gson();
         Map<String, ?> jsonS = appSharedPrefs.getAll();
-        for(Map.Entry<String,?> json : jsonS.entrySet()){
-            if(json.getKey().split("_")[0].equals(clazz.getName())){
+        for (Map.Entry<String, ?> json : jsonS.entrySet()) {
+            if (json.getKey().split("_")[0].equals(clazz.getName())) {
                 arrliTs.add((T) gson.fromJson(json.getValue().toString(), clazz));
             }
         }
         return arrliTs;
     }
 
-    public void removeAll(Class<T> clazz){
+    public void removeAll(Class<T> clazz) {
         SharedPreferences appSharedPerfs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         SharedPreferences.Editor perfsEditor = appSharedPerfs.edit();
         Map<String, ?> mapEntryList = appSharedPerfs.getAll();
         for (Map.Entry<String, ?> entry : mapEntryList.entrySet()) {
-            if(entry.getKey().split("_")[0].equals(clazz.getName())){
+            if (entry.getKey().split("_")[0].equals(clazz.getName())) {
                 perfsEditor.remove(entry.getKey());
                 perfsEditor.commit();
             }

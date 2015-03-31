@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Juan Acosta on 11/10/2014.
  */
-public class Cita implements Serializable{
+public class Cita implements Serializable {
     private String id;
     private String empresa;
     private String fechaInicio;

@@ -13,16 +13,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import mx.com.audioweb.indigolite.ClienteHttp;
 import mx.com.audioweb.indigolite.R;
 
 public class LiveStreaming extends Activity {
 
+    private static final String TAG = "Live Streaming";
     WebView web;
     ProgressBar progressBar;
     TextView tv;
-    private static final String TAG = "Live Streaming";
     String uid;
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class LiveStreaming extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_live_streaming);
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        tv =(TextView) findViewById(R.id.LSTV);
+        tv = (TextView) findViewById(R.id.LSTV);
         //FullScreen
 
         int mUIFlag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -58,10 +60,9 @@ public class LiveStreaming extends Activity {
             uid = extras.getString("uid");
             Log.e("EXTRAS-->citas_id", uid);
 
-            String URL = ClienteHttp.Transmicion_Url+uid;
+            String URL = ClienteHttp.Transmicion_Url + uid;
             web.loadUrl(URL);
-        }
-        else {
+        } else {
             web.loadUrl("http://www.audiowebtv.com/transmision_adaptable.php");
         }
         //Toast.makeText(this, web.toString(), Toast.LENGTH_LONG).show();

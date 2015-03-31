@@ -29,8 +29,9 @@ public class IncomingCallReceiver extends BroadcastReceiver {
     /**
      * Processes the incoming call, answers it, and hands it over to the
      * WalkieTalkieActivity.
+     *
      * @param context The context under which the receiver is running.
-     * @param intent The intent being received.
+     * @param intent  The intent being received.
      */
     @Override
     public void onReceive(Context context, Intent intent) {
