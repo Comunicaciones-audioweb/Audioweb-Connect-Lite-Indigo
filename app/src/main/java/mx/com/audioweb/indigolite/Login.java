@@ -37,7 +37,7 @@ public class Login extends Activity {
     String userName, password, webURL, getUserName, android_id;
     SharedPreferences preferences;
     Context mContext;
-    boolean authVoiceID = false, isLogin, isAuth = false, callService = true;
+    boolean authVoiceID =    false, isLogin, isAuth = false, callService = true;
     private Bundle id;
 
     @Override

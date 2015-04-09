@@ -19,14 +19,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import mx.com.audioweb.indigolite.AudioConference.AudioConferencia;
 import mx.com.audioweb.indigolite.Chat.Chat.UserList;
@@ -48,6 +62,8 @@ public class Home extends Activity implements View.OnClickListener {
     public AlertDialog alertDialog;
     public String userName;
     public String uid;
+    private static final String DATEF = "yyyy-MM-dd HH:mm:ss";
+    private Gson gson = new GsonBuilder().setDateFormat(DATEF).create();
     SharedPreferences myPrefs;
     SharedPreferences.Editor edit;
     private ArrayList<User_info> userinfos;
@@ -303,7 +319,7 @@ public class Home extends Activity implements View.OnClickListener {
         uid.putSerializable("uid", id);
         //startActivity(new Intent(this, Citas.class).putExtras(uid));
         new CitasTask(getApplicationContext(), id).execute();
-        //finish();
+
     }
 
 
