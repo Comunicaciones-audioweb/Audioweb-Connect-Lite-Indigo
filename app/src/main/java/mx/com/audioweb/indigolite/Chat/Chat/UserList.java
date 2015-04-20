@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,19 @@ public class UserList extends CustomActivity {
         setContentView(R.layout.user_list);
         getActionBar().setDisplayHomeAsUpEnabled(false);
         getActionBar().setHomeButtonEnabled(false);
-        updateUserStatus(true);
+        //updateUserStatus(true);
+        final String channel = user.getString("Name").replaceAll("\\s","");
+
+        ParsePush.subscribeInBackground(channel, new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("com.parse.push", "Susctrito a tu canal:  "+channel   );
+                } else {
+                    Log.e("com.parse.push", "Fail Subscribed", e);
+                }
+            }
+        });
     }
 
     @Override

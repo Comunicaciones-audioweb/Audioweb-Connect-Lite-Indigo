@@ -35,7 +35,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.rengwuxian.materialedittext:library:1.8.3'
-    //compile files('libs/vigolibrary.jar')
     compile files('libs/bolts-android-1.1.4.jar')
     compile files('libs/bolts-android-1.1.4-javadoc.jar')
     compile 'com.mcxiaoke.volley:library:1.0.15'

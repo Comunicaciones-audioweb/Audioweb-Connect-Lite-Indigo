@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,14 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +47,7 @@ public class Chat extends CustomActivity {
     private String buddy, buddyName;
     private Date lastMsgDate;
     private boolean isRunning;
+    ParseInstallation installation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,7 @@ public class Chat extends CustomActivity {
         setContentView(R.layout.chat);
         buddy = getIntent().getStringExtra(getResources().getString(R.string.intent_data));
         buddyName = getIntent().getStringExtra(getResources().getString(R.string.parse_name_user));
+        Log.e("BN", buddyName);
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         int color2 = generator.getColor(buddy);
         TextDrawable initial = TextDrawable.builder().buildRound("IN", color2);
@@ -99,7 +107,7 @@ public class Chat extends CustomActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(txt.getWindowToken(), 0);
 
-        String s = txt.getText().toString();
+        final String s = txt.getText().toString();
         final Conversation c = new Conversation(s, new Date(), UserList.user.getUsername());
         c.setStatus(Conversation.STATUS_SENDING);
         convList.add(c);
@@ -115,11 +123,29 @@ public class Chat extends CustomActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     c.setStatus(Conversation.STATUS_SENT);
+                    if (buddy != null) {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("from",UserList.user.getString("Name"));
+                            jsonObject.put("string",s);
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                        ParsePush push = new ParsePush();
+                        String channel = buddyName.replaceAll("\\s", "");
+                        push.setChannel(channel);
+                        //push.setQuery(pushQuery);
+                        Log.e("MENSAJE",String.valueOf(jsonObject));
+                        //push.setMessage(String.valueOf(jsonObject));
+                        push.setData(jsonObject);
+                        push.sendInBackground();
+                    }
                 } else {
                     c.setStatus(Conversation.STATUS_FAILED);
                 }
                 adp.notifyDataSetChanged();
             }
+
         });
 
     }
