@@ -38,7 +38,7 @@ public class UserList extends CustomActivity {
         setContentView(R.layout.user_list);
         getActionBar().setDisplayHomeAsUpEnabled(false);
         getActionBar().setHomeButtonEnabled(false);
-        //updateUserStatus(true);
+        updateUserStatus(true);
         final String channel = user.getString("Name").replaceAll("\\s","");
 
         ParsePush.subscribeInBackground(channel, new SaveCallback() {

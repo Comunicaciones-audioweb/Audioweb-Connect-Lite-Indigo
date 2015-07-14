@@ -74,4 +74,5 @@
     <string name="type_msg">Type your message</string>
     <string name="edit">Edit</string>
     <string name="parse_name_user">user_name</string>
+    <string name="Service_URL">http://66.226.72.48/connect/webServices/</string>
 </resources>

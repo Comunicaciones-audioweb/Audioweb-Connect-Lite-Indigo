@@ -35,7 +35,7 @@ import mx.com.audioweb.indigolite.Notifications.Group;
 public class ClienteHttp {
 
     public static final String URL = "http://66.226.72.48/connect/webServices/";
-    public static final String Transmicion_Url = "http://66.226.72.48/connect/liveStreaming/transmision_adaptable.php?id=";
+    public static final String Transnmicion_Url = "http://66.226.72.48/connect/liveStreaming/transmision_adaptable.php?id=";
     private static final String DATEF = "yyyy-MM-dd HH:mm:ss";
     private Gson gson = new GsonBuilder().setDateFormat(DATEF).create();
 
